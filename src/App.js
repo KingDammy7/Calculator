@@ -1,23 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+const CreateDigits = () => {
+
+  const updateCalc = (value) => {
+    setCalc(calc + value);
+  }
+  const [calc, setCalc] = useState("");
+
+  return [...Array(9)].map((i, idx) => (
+	<button onClick= {() => updateCalc(i,idx)}
+  key={`btn ${idx}`}>{idx + 1}</button>
+  ));
+};
 
 function App() {
+  const [calc, setCalc] = useState("");
+  const [result, setResult] = useState ("");
+  const operators = ['/', '*', '+', '-', '.'];
+
+  const updateCalc = value => {
+    setCalc(calc + value);
+  }
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="calculator">
+        <div className="display">
+         { result ? <span> (0) </span> : '' }
+          {calc || "0"} 
+        </div>
+
+        <div className="operators">
+          <button onClick= {() => updateCalc('/') }>/</button>
+          <button onClick= {() => updateCalc('*')}>*</button>
+          <button onClick= {() => updateCalc('+')}>+</button>
+          <button onClick= {() => updateCalc('-')}>-</button>
+
+          <button>DEL</button>
+        </div>
+
+        <div className="digits">
+          <CreateDigits  />
+          <button onClick= {() => updateCalc('0')}>0</button>
+          <button onClick= {() => updateCalc('.')}>.</button> 
+         
+          <button> =</button>
+        </div>
+      </div>
     </div>
   );
 }
